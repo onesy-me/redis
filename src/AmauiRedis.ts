@@ -21,6 +21,7 @@ export type IRedisClient = redis.RedisClientType<redis.RedisDefaultModules, any,
 
 class AmauiAmqp {
   public client_: IRedisClient;
+  public clientSubscriber: IRedisClient;
   public connected = false;
   private amalog: AmauiLog;
   private options_: IOptions = optionsDefault;
@@ -62,7 +63,10 @@ class AmauiAmqp {
   }
 
   public async subscribe(channels: string | string[], method: (message: string) => any, bufferMode?: boolean): Promise<void> {
-    const client = await this.client;
+    await this.connection;
+
+    // we have to separate subscribe, publish client context
+    const client = this.clientSubscriber;
 
     return await client.subscribe(channels, method as any, bufferMode);
   }
@@ -115,6 +119,7 @@ class AmauiAmqp {
 
           this.connected = false;
           this.client_ = undefined;
+          this.clientSubscriber = undefined;
 
           this.subscription.emit('disconnected');
 
@@ -140,6 +145,8 @@ class AmauiAmqp {
       this.client_ = createClient({ url: uri });
 
       await this.client_.connect();
+
+      this.clientSubscriber = this.client_.duplicate();
 
       this.amalog.info(`Connected`);
 
