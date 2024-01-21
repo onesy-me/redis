@@ -102,6 +102,9 @@ class AmauiAmqp {
     });
   }
 
+  // alias for the client
+  public connection = this.client;
+
   public get disconnect(): Promise<void> {
     return new Promise(async resolve => {
       if (this.connected) {
