@@ -1,0 +1,19 @@
+---
+version: '3.8'
+
+services:
+  amaui-redis:
+    image: redis:6.2-alpine
+    restart: always
+    volumes:
+      - '~/.amaui/redis:/.redis'
+    ports:
+      - '6379:6379'
+
+  amaui-redis-test:
+    image: redis:6.2-alpine
+    restart: always
+    volumes:
+      - '~/.amaui/test/redis:/.redis'
+    ports:
+      - '7379:6379'

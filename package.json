@@ -1,0 +1,76 @@
+{
+  "name": "@amaui/redis",
+  "version": "1.0.1",
+  "description": "Redis",
+  "repository": "https://github.com/amaui-org/amaui-redis.git",
+  "author": "Lazar <lazareric.com@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "main": "./src/index.ts",
+  "keywords": [
+    "redis",
+    "backend",
+    "back-end",
+    "web",
+    "javascript",
+    "js",
+    "typescript",
+    "node",
+    "nodejs",
+    "library",
+    "amaui"
+  ],
+  "scripts": {
+    "prebuild": "rimraf build",
+    "build": "node utils/js/build.js",
+    "release": "yarn build && yarn version --patch --no-git-tag-version && yarn build && cd ./build && npm publish",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "type": "tsc --noEmit -p tsconfig.json",
+    "cov": "cross-env NODE_ENV=test amaui-test",
+    "test": "yarn lint && yarn type && yarn build && yarn cov",
+    "docker": "docker-compose -p 'amaui' up -d"
+  },
+  "peerDependencies": {
+    "redis": "^4.6.12"
+  },
+  "dependencies": {
+    "@amaui/errors": "^1.0.111",
+    "@amaui/log": "^1.0.15",
+    "@amaui/subscription": "^1.0.5",
+    "@amaui/utils": "^1.1.17",
+    "@babel/runtime": "^7.18.3"
+  },
+  "devDependencies": {
+    "@amaui/models": "^1.0.11111",
+    "@amaui/test": "^1.0.11117",
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-class-properties": "^7.17.12",
+    "@babel/plugin-proposal-object-rest-spread": "^7.18.0",
+    "@babel/plugin-transform-runtime": "^7.16.4",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-typescript": "^7.16.0",
+    "@types/node": "^16.11.10",
+    "@types/redis": "^4.0.11",
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "fast-glob": "^3.2.7",
+    "fs-extra": "^10.0.0",
+    "react": "^17.0.2",
+    "redis": "^4.6.12",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.4.0",
+    "tslint": "^6.1.3",
+    "typescript": "^4.5.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=12.0.0",
+    "yarn": ">=1.22"
+  }
+}
