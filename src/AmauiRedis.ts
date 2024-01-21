@@ -107,7 +107,18 @@ class AmauiAmqp {
   }
 
   // alias for the client
-  public connection = this.client;
+  public get connection(): Promise<IRedisClient> {
+    return new Promise(async (resolve, reject) => {
+      if (this.connected && this.client_) return resolve(this.client_);
+
+      try {
+        return resolve(await this.connect());
+      }
+      catch (error) {
+        throw error;
+      }
+    });
+  }
 
   public get disconnect(): Promise<void> {
     return new Promise(async resolve => {

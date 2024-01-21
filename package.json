@@ -1,6 +1,6 @@
 {
   "name": "@amaui/redis",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Redis",
   "repository": "https://github.com/amaui-org/amaui-redis.git",
   "author": "Lazar <lazareric.com@gmail.com>",
