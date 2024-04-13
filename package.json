@@ -1,6 +1,6 @@
 {
   "name": "@amaui/redis",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "description": "Redis",
   "repository": "https://github.com/amaui-org/amaui-redis.git",
   "author": "Lazar <lazareric.com@gmail.com>",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@amaui/errors": "^1.0.111",
-    "@amaui/log": "^1.0.15",
+    "@amaui/log": "^1.0.22",
     "@amaui/subscription": "^1.0.5",
     "@amaui/utils": "^1.1.17",
     "@babel/runtime": "^7.18.3"
