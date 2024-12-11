@@ -2,7 +2,7 @@
   "name": "@onesy/redis",
   "version": "1.0.0",
   "description": "Redis",
-  "repository": "https://github.com/onesy-org/onesy-redis.git",
+  "repository": "https://github.com/onesy-me/redis.git",
   "author": "Lazar <lazareric.com@gmail.com>",
   "license": "MIT",
   "private": false,
