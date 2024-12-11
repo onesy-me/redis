@@ -4,11 +4,11 @@
 
 <p align='center'>
   <a target='_blank' rel='noopener noreferrer' href='#'>
-    <img src='utils/images/logo.svg' alt='amaui logo' />
+    <img src='utils/images/logo.svg' alt='onesy logo' />
   </a>
 </p>
 
-<h1 align='center'>amaui Redis</h1>
+<h1 align='center'>onesy Redis</h1>
 
 <p align='center'>
   Redis
@@ -38,7 +38,7 @@
 ### Add
 
 ```sh
-  yarn add @amaui/redis
+  yarn add @onesy/redis
 ```
 
 Add `redis` peer dependency.
@@ -50,21 +50,21 @@ Add `redis` peer dependency.
 ### Use
 
 ```javascript
-  import AmauiRedis from '@amaui/redis';
+  import OnesyRedis from '@onesy/redis';
   // Make if you wanna a config file and
   // inside of it add all the process.env related props
   import Config from './config';
 
   // Make a new amqp instance
-  const amauiRedis = new AmauiRedis({
+  const onesyRedis = new OnesyRedis({
     uri: Config.amqp.redis.uri
   });
 
   // Await for a client connection
-  await amauiRedis.client;
+  await onesyRedis.client;
 
   // Send to a queue
-  await amauiRedis.publish('a', 'a'); 
+  await onesyRedis.publish('a', 'a'); 
 ```
 
 ### Dev

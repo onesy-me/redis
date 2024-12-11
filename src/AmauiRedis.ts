@@ -1,11 +1,11 @@
 import redis, { createClient } from 'redis';
 
-import merge from '@amaui/utils/merge';
-import stringify from '@amaui/utils/stringify';
-import parse from '@amaui/utils/parse';
-import { ConnectionError } from '@amaui/errors';
-import AmauiLog from '@amaui/log';
-import AmauiSubscription from '@amaui/subscription';
+import merge from '@onesy/utils/merge';
+import stringify from '@onesy/utils/stringify';
+import parse from '@onesy/utils/parse';
+import { ConnectionError } from '@onesy/errors';
+import OnesyLog from '@onesy/log';
+import OnesySubscription from '@onesy/subscription';
 
 export interface IMessageDataOptions {
   parse?: boolean;
@@ -19,14 +19,14 @@ export const optionsDefault: IOptions = {};
 
 export type IRedisClient = redis.RedisClientType<redis.RedisDefaultModules, any, any>;
 
-class AmauiAmqp {
+class OnesyAmqp {
   public client_: IRedisClient;
   public clientSubscriber: IRedisClient;
   public connected = false;
-  private amalog: AmauiLog;
+  private amalog: OnesyLog;
   private options_: IOptions = optionsDefault;
   // For listening on redis events
-  public subscription = new AmauiSubscription();
+  public subscription = new OnesySubscription();
 
   public get options(): IOptions {
     return this.options_;
@@ -39,7 +39,7 @@ class AmauiAmqp {
   public constructor(options: IOptions = optionsDefault) {
     this.options = options;
 
-    this.amalog = new AmauiLog({
+    this.amalog = new OnesyLog({
       arguments: {
         pre: [
           'Redis'
@@ -197,4 +197,4 @@ class AmauiAmqp {
 
 }
 
-export default AmauiAmqp;
+export default OnesyAmqp;

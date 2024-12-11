@@ -1,7 +1,7 @@
 /* tslint:disable: no-shadowed-variable */
-import { assert } from '@amaui/test';
+import { assert } from '@onesy/test';
 
-import AmauiRedis from '../src';
+import OnesyRedis from '../src';
 
 import Config from '../utils/js/config';
 
@@ -10,19 +10,19 @@ const options = {
 };
 
 preAll(async () => {
-  const redis = new AmauiRedis(options);
+  const redis = new OnesyRedis(options);
 
   await redis.reset();
 
   await redis.disconnect;
 });
 
-group('AmauiRedis', () => {
-  let redis: AmauiRedis;
+group('OnesyRedis', () => {
+  let redis: OnesyRedis;
   const messages = [];
 
   pre(async () => {
-    redis = new AmauiRedis(options);
+    redis = new OnesyRedis(options);
 
     redis.subscription.subscribe(message => messages.push(message));
   });

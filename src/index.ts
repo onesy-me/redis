@@ -1,2 +1,2 @@
-export * from './AmauiRedis';
-export { default } from './AmauiRedis';
+export * from './OnesyRedis';
+export { default } from './OnesyRedis';
