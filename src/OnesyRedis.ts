@@ -59,22 +59,22 @@ class OnesyRedis {
   public async set(key: string, value: any): Promise<any> {
     const client = await this.client;
 
-    return await client.set(key, value);
+    return client.set(key, value);
   }
 
-  public async subscribe(channels: string | string[], method: (message: string) => any, bufferMode?: boolean): Promise<void> {
+  public async subscribe(channels: string | string[], method: (message: string) => any, bufferMode?: boolean) {
     await this.connection;
 
     // we have to separate subscribe, publish client context
     const client = this.clientSubscriber;
 
-    return await client.subscribe(channels, method as any, bufferMode);
+    return client.subscribe(channels, method as any, bufferMode);
   }
 
   public async unsubscribe(channels: string | string[], method: (message: string) => any, bufferMode?: boolean): Promise<void> {
     const client = await this.client;
 
-    return await client.unsubscribe(channels, method as any, bufferMode);
+    return client.unsubscribe(channels, method as any, bufferMode);
   }
 
   public messageData(message: string, options: IMessageDataOptions = { parse: true }) {
@@ -158,6 +158,8 @@ class OnesyRedis {
       await this.client_.connect();
 
       this.clientSubscriber = this.client_.duplicate();
+
+      await this.clientSubscriber.connect();
 
       this.amalog.info(`Connected`);
 
