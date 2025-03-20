@@ -19,7 +19,7 @@ export const optionsDefault: IOptions = {};
 
 export type IRedisClient = redis.RedisClientType<redis.RedisDefaultModules, any, any>;
 
-class OnesyAmqp {
+class OnesyRedis {
   public client_: IRedisClient;
   public clientSubscriber: IRedisClient;
   public connected = false;
@@ -197,4 +197,4 @@ class OnesyAmqp {
 
 }
 
-export default OnesyAmqp;
+export default OnesyRedis;
