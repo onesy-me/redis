@@ -56,11 +56,23 @@ class OnesyRedis {
     return options.parse ? parse(value) : value;
   }
 
-  public async set(key: string, value: any): Promise<any> {
+  public async add(key: string, value: any): Promise<any> {
     const client = await this.client;
 
     return client.set(key, value);
   }
+
+  // alias
+  public set = this.add;
+
+  public async remove(key: string): Promise<any> {
+    const client = await this.client;
+
+    return client.del(key);
+  }
+
+  // alias
+  public delete = this.remove;
 
   public async subscribe(channels: string | string[], method: (message: string) => any, bufferMode?: boolean) {
     await this.connection;
