@@ -13,6 +13,7 @@ export interface IMessageDataOptions {
 
 export interface IOptions {
   uri?: string;
+  namespace?: string;
 }
 
 export const optionsDefault: IOptions = {};
@@ -23,6 +24,7 @@ class OnesyRedis {
   public client_: IRedisClient;
   public clientSubscriber: IRedisClient;
   public connected = false;
+  public namespace: string = '';
   private amalog: OnesyLog;
   private options_: IOptions = optionsDefault;
   // For listening on redis events
@@ -34,6 +36,8 @@ class OnesyRedis {
 
   public set options(options: IOptions) {
     this.options_ = merge(options, optionsDefault);
+
+    this.namespace = this.options.namespace ?? this.namespace;
   }
 
   public constructor(options: IOptions = optionsDefault) {
@@ -48,16 +52,30 @@ class OnesyRedis {
     });
   }
 
-  public async get(key: string, options = { parse: true }): Promise<any> {
+  public async query(queryProps: string = '*'): Promise<string[]> {
     const client = await this.client;
+
+    const query = this.namespace ? `${this.namespace}:${queryProps}` : queryProps;
+
+    const value = await client.keys(query);
+
+    return value;
+  }
+
+  public async get(keyProps: string, options = { parse: true }): Promise<any> {
+    const client = await this.client;
+
+    const key = this.namespace ? `${this.namespace}:${keyProps}` : keyProps;
 
     const value = await client.get(key);
 
     return options.parse ? parse(value) : value;
   }
 
-  public async add(key: string, value: any): Promise<any> {
+  public async add(keyProps: string, value: any): Promise<any> {
     const client = await this.client;
+
+    const key = this.namespace ? `${this.namespace}:${keyProps}` : keyProps;
 
     return client.set(key, value);
   }
@@ -65,14 +83,29 @@ class OnesyRedis {
   // alias
   public set = this.add;
 
-  public async remove(key: string): Promise<any> {
+  public async remove(keyProps: string): Promise<any> {
     const client = await this.client;
+
+    const key = this.namespace ? `${this.namespace}:${keyProps}` : keyProps;
 
     return client.del(key);
   }
 
   // alias
   public delete = this.remove;
+
+  public async removeMany(query?: string): Promise<any> {
+    const keys = await this.query(query);
+
+    return Promise.allSettled((keys || []).map(key => {
+      const keyProp = this.namespace ? key.replace(`${this.namespace}:`, '') : key;
+
+      return this.remove(keyProp);
+    }));
+  }
+
+  // alias
+  public deleteMany = this.removeMany;
 
   public async subscribe(channels: string | string[], method: (message: string) => any, bufferMode?: boolean) {
     await this.connection;
